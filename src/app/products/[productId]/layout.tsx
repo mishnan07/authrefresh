@@ -12,11 +12,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     if (product) {
       return {
-        title: `${product.title} - Product Details`,
-        description: product.description[0] || 'Product details',
+        title: `${product.name} - Product Details`,
+        description: product.description || 'Product details',
         openGraph: {
-          title: `${product.title} - Product Details`,
-          description: product.description[0] || 'Product details',
+          title: `${product.name} - Product Details`,
+          description: product.description || 'Product details',
           images: [{
             url: product.images[0]?.filePath,
             width: 800,
@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         },
         twitter: {
           card: 'summary_large_image',
-          title: `${product.title} - Product Details`,
-          description: product.description[0] || 'Product details',
+          title: `${product.name} - Product Details`,
+          description: product.description || 'Product details',
           images: [product.images[0]?.filePath],
         },
       };
