@@ -6,9 +6,11 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
-    const response = await fetch(`/v1/d-card-no/noauth/product?id=${params.productId}`);
+    const response = await fetch(`https://apigateway.seclob.com/v1/d-card-no/noauth/product?id=${params.productId}`);
     const data = await response.json();
     const product = data.data
+
+    console.log('Product data:', product);
 
     if (product) {
       return {
