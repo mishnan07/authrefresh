@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import axios from 'axios';
 
 interface Props {
   params: { productId: string };
@@ -7,9 +6,9 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
-    const response = await axios.get('https://apigateway.seclob.com/v1/ecard-no/product');
-    const products = response.data.data;
-    const product = products.find((p: any) => p._id === params.productId);
+    const response = await fetch(`/v1/d-card-no/noauth/product?id=${params.productId}`);
+    const data = await response.json();
+    const product = data.data
 
     if (product) {
       return {
@@ -18,8 +17,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         openGraph: {
           title: `${product.title} - Product Details`,
           description: product.description[0] || 'Product details',
-          images: [product.images[0]?.filePath],
+          images: [{
+            url: product.images[0]?.filePath,
+            width: 800,
+            height: 600,
+          }],
           type: 'website',
+        },
+        twitter: {
+          card: 'summary_large_image',
+          title: `${product.title} - Product Details`,
+          description: product.description[0] || 'Product details',
+          images: [product.images[0]?.filePath],
         },
       };
     }
