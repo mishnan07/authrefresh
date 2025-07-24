@@ -5,7 +5,7 @@ import { LoginRequest, LoginResponse, RefreshTokenRequest, User } from '@/types/
 const API_BASE_URL = 'https://apigateway.seclob.com/v1/user-no/auth';
 
 // Create axios instance
-const apiClient = axios.create();
+export const apiClient = axios.create();
 
 // Add request interceptor to include access token
 apiClient.interceptors.request.use((config) => {
@@ -21,6 +21,7 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    console.log(error.response?.status,'error.response?.status',error.response);
     
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -50,12 +51,12 @@ apiClient.interceptors.response.use(
 
 export const authService = {
   async login(credentials: LoginRequest): Promise<LoginResponse> {
-    const response = await axios.post(`${API_BASE_URL}/login`, credentials);
+    const response = await axios.post(`${API_BASE_URL}/login-test`, credentials);
     return response.data;
   },
 
   async refreshToken(refreshToken: string): Promise<LoginResponse> {
-    const response = await axios.post(`${API_BASE_URL}/refresh-token`, {
+    const response = await axios.post(`${API_BASE_URL}/refresh-token-test`, {
       refreshToken
     });
     return response.data;

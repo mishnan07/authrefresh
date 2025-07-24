@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const data = await response.json();
     const product = data.data
 
-    console.log('Product data:', product);
+    console.log('Product data:', product.name,product.images[0]?.filePath );
 
     if (product) {
       return {

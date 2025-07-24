@@ -30,6 +30,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (email: string, password: string) => {
     try {
       const response = await authService.login({ email, password });
+      console.log(response.accessToken,'ppppppppppppppppppp');
       
       tokenManager.setTokens(response.accessToken, response.refreshToken);
       

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import axios from 'axios';
+import { apiClient } from '@/lib/auth';
 
 interface Product {
   _id: string;
@@ -22,7 +22,7 @@ export default function ProductsPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://apigateway.seclob.com/v1/ecard-no/product');
+        const response = await apiClient.get('https://apigateway.seclob.com/v1/ecard/product');
         setProducts(response.data.data);
       } catch (error) {
         console.error('Error fetching products:', error);
